@@ -4,24 +4,4 @@
 */
 
 /** extensions/Visual/modules/ext.Visual.css */
-ul.mw-ext-Visual {
-    list-style: none; margin: 0; padding: 0;
-}
-ul.mw-ext-Visual li {
-    background-image: url(images/page.png); background-position: 0 1px; background-repeat: no-repeat;
-    padding-left: 20px;
-}
-ul.mw-ext-Visual li.folder {
-    background-image: url(images/folder.png);
-}
- 
-ul.mw-ext-Visual a {
-    color: #000000; cursor: pointer; text-decoration: none;
-}
-ul.mw-ext-Visual a:hover {
-    text-decoration: underline;
-}
-
-#mw-panel{
-    background: green;
-}
+.vw_window{background:#A64B00;bottom:0;color:#fff;font-size:.8em;height:100px;line-height:15px;overflow:auto;position:fixed;right:0;width:100px;z-index:255}.vw_med{width: 20%;}.vw_window #vw_title{background:#A64B00;height:15px}.vw_window #vw_title #vw_name{float:left;text-indent:3px}.vw_window #vw_title #vw_resize{cursor:pointer;float:right;text-align:center;width:15px}.vw_window #vw_content{background:#FFB273;bottom:3px;left:3px;overflow:auto;position:absolute;right:3px;top:15px}

@@ -13,11 +13,6 @@ var maxHeight=$(window).height()-gap;
 var maxWidth=$(window).width()-gap;
 var state=1;
 
-var styles='.vw_window{background:#A64B00;bottom:0;color:#fff;font-size:.8em;height:100px;line-height:15px;overflow:auto;position:fixed;right:0;width:100px;z-index:255}.vw_med{width: 20%;}.vw_window #vw_title{background:#A64B00;height:15px}.vw_window #vw_title #vw_name{float:left;text-indent:3px}.vw_window #vw_title #vw_resize{cursor:pointer;float:right;text-align:center;width:15px}.vw_window #vw_content{background:#FFB273;bottom:3px;left:3px;overflow:auto;position:absolute;right:3px;top:15px}';
-
-//Inserta los estilos
-$('head').append('<style>'+styles+'</style>');
-
 //Inserta la ventana de visualizaciÃ³n
 $("body").prepend(
     '<div class="vw_window">'+
@@ -52,8 +47,10 @@ links.each(function(){
     var title=parseInt($(this).attr("title"));
     if(title>0 && title<3000){
         $(this).attr("data-index",index);
+        
         $(this).addClass("vw_link");
         vwContent.append($(this).clone());
+        $(this).css("background","#00ff00");
         index++;
     }
 });
@@ -99,7 +96,7 @@ $(document).scrollTop(1);
 
 //FUNCIONES
 function processLinks(links){
-    var maxToShow=3;    //MÃ¡ximo a mostrar de la lista de acontecimientos
+    var maxToShow=4;    //MÃ¡ximo a mostrar de la lista de acontecimientos
     $.getJSON(
         "http://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles="+links.join("|")+"&callback=?",
         function(data){
