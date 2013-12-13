@@ -14,21 +14,24 @@
  * @author Alejandro Parra < maparrar@gmail.com >
  */
 
-/**
- * This documentation group collects source code files belonging to Visual.
- *
- * @defgroup Visual Visual
- */
-
-define( 'Visual_VERSION', 'visual = 0.1' );
 
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Visual',
-	'version' => Visual_VERSION,
+	'version' => 'visual = 0.1',
 	'author' => array( '[https://github.com/maparrar maparrar]' ),
 	'url' => 'https://github.com/maparrar/Visual',
 	'descriptionmsg' => 'visual-desc',
 );
 
-$wgExtensionMessagesFiles['Visual'] = dirname( __FILE__ ) . '/Visual.i18n.php';
+// Adds Autoload Classes
+$wgAutoloadClasses['VisualHooks'] = dirname( __FILE__ ) . "/VisualHooks.php";
+// Adds Internationalized Messages
+//$wgExtensionMessagesFiles['Visual'] = dirname( __FILE__ ) . "/Visual.i18n.php";
+
+//VisualHooks::addResources($out);
+
+// Registers Hooks
+$wgHooks['BeforePageDisplay'][] = 'VisualHooks::addResources';
+//$wgHooks['MakeGlobalVariablesScript'][] = 'JSBreadCrumbsHooks::addJSVars';
+//$wgHooks['GetPreferences'][] = 'JSBreadCrumbsHooks::addPreferences';

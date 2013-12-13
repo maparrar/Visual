@@ -1,0 +1,27 @@
+/* 
+    Created on : 12/12/2013, 07:49:00 PM
+    Author     : maparrar
+*/
+
+/** extensions/Visual/modules/ext.Visual.css */
+ul.mw-ext-Visual {
+    list-style: none; margin: 0; padding: 0;
+}
+ul.mw-ext-Visual li {
+    background-image: url(images/page.png); background-position: 0 1px; background-repeat: no-repeat;
+    padding-left: 20px;
+}
+ul.mw-ext-Visual li.folder {
+    background-image: url(images/folder.png);
+}
+ 
+ul.mw-ext-Visual a {
+    color: #000000; cursor: pointer; text-decoration: none;
+}
+ul.mw-ext-Visual a:hover {
+    text-decoration: underline;
+}
+
+#mw-panel{
+    background: green;
+}
