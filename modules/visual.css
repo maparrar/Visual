@@ -1,7 +1,49 @@
-/* 
-    Created on : 12/12/2013, 07:49:00 PM
-    Author     : maparrar
-*/
-
-/** extensions/Visual/modules/ext.Visual.css */
-.vw_window{background:#A64B00;bottom:0;color:#fff;font-size:.8em;height:100px;line-height:15px;overflow:auto;position:fixed;right:0;width:100px;z-index:255}.vw_med{width: 20%;}.vw_window #vw_title{background:#A64B00;height:15px}.vw_window #vw_title #vw_name{float:left;text-indent:3px}.vw_window #vw_title #vw_resize{cursor:pointer;float:right;text-align:center;width:15px}.vw_window #vw_content{background:#FFB273;bottom:3px;left:3px;overflow:auto;position:absolute;right:3px;top:15px}
+/*
+ * Visual plugin for JQuery
+ * Mediawiki Visualization Context Extension
+ * https://github.com/maparrar/Visual
+ * maparrar (http://maparrar.github.io/ - maparrar(at)gmail(dot)com )
+ * Dec 2013
+ **/
+.vw_window{
+    background:#A64B00;
+    bottom:0;
+    color:#fff;
+    font-size:.8em;
+    height:100px;
+    line-height:15px;
+    overflow:auto;
+    position:fixed;
+    right:0;
+    width:100px;
+    z-index:255;
+}
+.vw_max{
+    width: 20%;
+}
+.vw_window #vw_title{
+    background:#A64B00;
+    height:15px;
+}
+.vw_window #vw_title #vw_name{
+    float:left;
+    text-indent:3px;
+}
+.vw_window #vw_title #vw_resize{
+    cursor:pointer;
+    float:right;
+    text-align:center;
+    width:15px;
+}
+.vw_window #vw_canvas{
+    background: #fff;
+}
+.vw_window #vw_content{
+    background:#FFB273;
+    bottom:3px;
+    left:3px;
+    overflow:auto;
+    position:absolute;
+    right:3px;
+    top:15px;
+}
