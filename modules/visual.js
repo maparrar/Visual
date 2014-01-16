@@ -5,7 +5,7 @@
  * maparrar (http://maparrar.github.io/ - maparrar(at)gmail(dot)com )
  * Dec 2013
  **/
-$(document).ready(function(){
+$(window).load(function(){
     /*
      * Se usa el plugin en el body del documento. Es posible pasar varios
      * parámetros para configurar la ventana minimizada y maximizada.
