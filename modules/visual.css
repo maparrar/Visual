@@ -50,8 +50,9 @@
     margin-top: 10px;
 }
 .vw_window #vw_content .vw_link{
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #999;
     font-weight: bold;
+    margin: 0 5px;
 }
 .vw_window #vw_content .vw_items{
     margin-left: 10px;

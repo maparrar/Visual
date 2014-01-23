@@ -56,7 +56,8 @@
         events(visual);
         
         //Pruebas de three.js
-        test3d(visual);
+//        test3d(visual);
+        test3dSprites(visual);
         
         //Procesa los datos y/o links de la página de la Wiki
         processWikiPage(opts);
@@ -70,6 +71,8 @@
      * @returns {undefined}
      */
     function initRenderer(visual){
+//        if (!Detector.webgl)
+//            Detector.addGetWebGLMessage();
         three.renderer=new THREE.WebGLRenderer();
         maximize(visual);
         three.camera = new THREE.PerspectiveCamera( 75, visual.canvas.width() / visual.canvas.height(), 1, 3000 );
@@ -247,8 +250,79 @@
             three.renderer.render(three.scene, three.camera);
         };
     };
-    
-    
+        
+    function test3dSprites(visual){
+        var particles, geometry, material, i, h, color, sprite, size;
+        var mouseX = 0, mouseY = 0;
+        var windowHalfX = visual.canvas.width() / 2;
+        var windowHalfY = visual.canvas.height() / 2;
+
+        init();
+        animate();
+
+        function init() {
+            geometry = new THREE.Geometry();
+//            sprite = THREE.ImageUtils.loadTexture("textures/sprites/disc.png");
+            sprite = THREE.ImageUtils.loadTexture("http://localhost/wiki/extensions/Visual/modules/textures/sprites/disc.png");
+            for (i = 0; i < 500; i++) {
+                var vertex = new THREE.Vector3();
+                vertex.x = 2000 * Math.random() - 1000;
+                vertex.y = 2000 * Math.random() - 1000;
+                vertex.z = 2000 * Math.random() - 1000;
+                geometry.vertices.push(vertex);
+            }
+            material = new THREE.ParticleSystemMaterial({size: 35, sizeAttenuation: false, map: sprite, transparent: true});
+            material.color.setHSL(1.0, 0.3, 0.7);
+            particles = new THREE.ParticleSystem(geometry, material);
+            particles.sortParticles = true;
+            three.scene.add(particles);
+            
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            document.addEventListener('touchstart', onDocumentTouchStart, false);
+            document.addEventListener('touchmove', onDocumentTouchMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        function onWindowResize() {
+            three.camera.aspect =visual.canvas.width()/visual.canvas.height();
+            three.camera.updateProjectionMatrix();
+            three.renderer.setSize(visual.canvas.width(),visual.canvas.height());
+        }
+        function onDocumentMouseMove(event) {
+            var canvas = $(".vw_window");
+            var position = canvas.position();
+            if(event.clientX>=position.left && event.clientY>=position.top){
+                mouseX = event.clientX - windowHalfX;
+                mouseY = event.clientY - windowHalfY;
+            }
+        }
+        function onDocumentTouchStart(event) {
+            if (event.touches.length == 1) {
+                event.preventDefault();
+                mouseX = event.touches[ 0 ].pageX - windowHalfX;
+                mouseY = event.touches[ 0 ].pageY - windowHalfY;
+            }
+        }
+        function onDocumentTouchMove(event) {
+            if (event.touches.length == 1) {
+                event.preventDefault();
+                mouseX = event.touches[ 0 ].pageX - windowHalfX;
+                mouseY = event.touches[ 0 ].pageY - windowHalfY;
+            }
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+        function render() {
+            var time = Date.now() * 0.00005;
+            three.camera.position.x += (mouseX - three.camera.position.x) * 0.05;
+            three.camera.position.y += (-mouseY - three.camera.position.y) * 0.05;
+            three.camera.lookAt(three.scene.position);
+            h = (360 * (1.0 + time) % 360) / 360;
+            material.color.setHSL(h, 0.5, 0.5);
+            three.renderer.render(three.scene, three.camera);
+        }
+    };
     
     
     
