@@ -38,6 +38,7 @@
     function init(obj,optUser){
         //Variables por defecto
         var def = {
+            server: "http://localhost/wiki/",
             minHeight: 100,
             minWidth: 100,
             mw_body: $(".mw-body")      //Cuerpo de la página de mediawiki
@@ -58,7 +59,7 @@
         test3d(visual);
         
         //Procesa los datos y/o links de la página de la Wiki
-        processWikiPage();
+        processWikiPage(opts);
     };
     
     
@@ -281,23 +282,11 @@
      * Refactorizar y tratar con otras fuentes
      */
 
-    function processWikiPage() {
-        var vizwiki, vwContent, resize, wikiBody, vizlinks, vizfields;
-        
-
-        var minHeight=minWidth=100;
-        var gap=100;
-        var maxHeight=$(window).height()-gap;
-        var maxWidth=$(window).width()-gap;
-        var state=1;
-
-        
+    function processWikiPage(opts) {
+        var vizwiki, vwContent, wikiBody, vizlinks, vizfields;
         prepareHtml();
         init();
         events();
-        
-        
-        
         //FUNCIONES
         function init(){
             //Captura pobremente los enlaces de los años
@@ -336,26 +325,12 @@
         function prepareHtml(){
             vizwiki=$(".vw_window");
             vwContent=$("#vw_content");
-            resize=vizwiki.find("#vw_resize");
             wikiBody=$(".mw-body");
-            resize.click(function(){
-                if(vizwiki.hasClass("vw_med")){
-                    wikiBody.width(wikiBody.width()+vizwiki.width());
-                    vizwiki.removeClass("vw_med");
-                    vizwiki.height(minHeight);
-                }else{
-                    vizwiki.addClass("vw_med");
-                    wikiBody.width(wikiBody.width()-vizwiki.width());
-                    vizwiki.height($(window).height());
-                }
-            });
         };
         
         //Crea los eventos asociados a la ventana
         function events() {
-            vizwiki.find(".vw_link").click(function(e) {
-                e.preventDefault();
-            }).css("display", "block");
+            vizwiki.find(".vw_link").css("display", "block");
 
             //Detecta el scroll
             $(document).scroll(function() {
@@ -387,7 +362,7 @@
         function processLinks(links){
             var maxToShow=4;    //Máximo a mostrar de la lista de acontecimientos
             $.getJSON(
-                "http://localhost/wiki/api.php?action=query&prop=revisions&rvprop=content&format=json&titles="+links.join("|")+"&callback=?",
+                opts.server+"api.php?action=query&prop=revisions&rvprop=content&format=json&titles="+links.join("|")+"&callback=?",
                 function(data){
                     for(var i in data.query.pages){
                         var page=data.query.pages[i];
@@ -396,18 +371,85 @@
                             var content=page.revisions[0]["*"];
                             var lines=content.split("\n");
                             var element=vizwiki.find(".vw_field[title='"+title+"']");
-                            
-                            console.debug( element.find(".vw_items"));
-                            
                             element.find(".vw_items").empty();
                             for(var j in lines){
                                 var selected=j%(parseInt(lines.length/(maxToShow+1)));
                                 if(lines[j].indexOf("*")>=0&&lines[j].indexOf("[[")>=0&&!selected){
-                                    element.find(".vw_items").append("<div>"+lines[j]+"</div>");
+                                    var string=replace("\\[\\[",'<a href="/wiki/index.php/',lines[j]);
+                                    string=replace("\\]\\]",'">LINK</a>',string);
+                                    string=replace("\\*",'',string);
+                                    element.find(".vw_items").append('<div class="vw_item">'+string+'</div>');
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+//                                    var obj, i;
+//                                    for ( i = three.scene.children.length - 1; i >= 0 ; i -- ) {
+//                                        obj = three.scene.children[ i ];
+//                                        if (  obj !== three.camera) {
+//                                            three.scene.remove(obj);
+//                                        }
+//                                    }
+//                                    
+//                                    
+//                                    var particles, geometry, materials = [];
+//                                    var geometry = new THREE.Geometry();
+////                                    for ( i = 0; i < 0; i ++ ) {
+//                                        var vertex = new THREE.Vector3();
+//                                        vertex.x = Math.random() * 2000 - 1000;
+//                                        vertex.y = Math.random() * 2000 - 1000;
+//                                        vertex.z = Math.random() * 2000 - 1000;
+//                                        geometry.vertices.push( vertex );
+////                                    }
+//                                    parameters = [
+//                                        [ [1, 1, 0.5], 50 ],
+//                                        [ [0.95, 1, 0.5], 50 ],
+//                                        [ [0.90, 1, 0.5], 50 ],
+//                                        [ [0.85, 1, 0.5], 50 ],
+//                                        [ [0.80, 1, 0.5], 50 ]
+//                                    ];
+//
+//                                    for ( i = 0; i < parameters.length; i ++ ) {
+//                                        color = parameters[i][0];
+//                                        size  = parameters[i][1];
+//
+//                                        materials[i] = new THREE.ParticleSystemMaterial( { size: size } );
+//
+//                                        particles = new THREE.ParticleSystem( geometry, materials[i] );
+//                                        particles.rotation.x = Math.random() * 6;
+//                                        particles.rotation.y = Math.random() * 6;
+//                                        particles.rotation.z = Math.random() * 6;
+//
+//                                        three.scene.add(particles);
+//                                    }
+//                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                 }
                             }
                         }
                     }
+                    var links=vwContent.find("a");
+                    links.each(function(){
+                        var name=replace('/wiki/index.php/','',$(this).attr("href"));
+                        $(this).text(name);
+                        $(this).attr("href",encodeURIComponent(name));
+                    });
+                    
                 }
             );
         };
@@ -424,6 +466,10 @@
             bounds.right = bounds.left + el.outerWidth();
             bounds.bottom = bounds.top + el.outerHeight();
             return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+        };
+        replace=function(search,replace,string){
+            var regexp = new RegExp(search,"g");
+            return string.replace(regexp,replace);
         };
     };
         
