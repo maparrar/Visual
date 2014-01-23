@@ -3,7 +3,7 @@
  * Mediawiki Visualization Context Extension
  * https://github.com/maparrar/Visual
  * maparrar (http://maparrar.github.io/ - maparrar(at)gmail(dot)com )
- * Dec 2013
+ * Jan 2014
  **/
 $(window).load(function(){
     /*

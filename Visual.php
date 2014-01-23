@@ -21,7 +21,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => 'visual = 0.1',
 	'author' => array( '[https://github.com/maparrar maparrar]' ),
 	'url' => 'https://github.com/maparrar/Visual',
-	'descriptionmsg' => 'visual-desc',
+	'descriptionmsg' => 'Prototipo para visualización en Mediawiki',
 );
 
 // Adds Autoload Classes
