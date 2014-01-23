@@ -263,7 +263,7 @@
         function init() {
             geometry = new THREE.Geometry();
 //            sprite = THREE.ImageUtils.loadTexture("textures/sprites/disc.png");
-            sprite = THREE.ImageUtils.loadTexture("http://localhost/wiki/extensions/Visual/modules/textures/sprites/disc.png");
+            sprite = THREE.ImageUtils.loadTexture(visual.server+"extensions/Visual/modules/textures/sprites/disc.png");
             for (i = 0; i < 500; i++) {
                 var vertex = new THREE.Vector3();
                 vertex.x = 2000 * Math.random() - 1000;
