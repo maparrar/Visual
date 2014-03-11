@@ -7,4 +7,11 @@ Instalación
 ====
 * Descargar en el directorio "extensions" de la instalación de MediaWiki
 * Agregar la siguiente línea al final del archivo LocalSettings.php
-    <code>require_once( "extensions/Visual/Visual.php" );</code>
+    ```php
+    require_once( "extensions/Visual/Visual.php" );
+    ```
+
+Notas
+====
+* Ver las extensiones instaladas:
+    http://localhost/wiki/index.php/Especial:Versi%C3%B3n
