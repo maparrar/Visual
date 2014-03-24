@@ -95,7 +95,7 @@
             '<div class="vw_window">'+
                 '<div id="vw_title">'+
                     '<div id="vw_name">Contexto</div>'+
-                    '<div id="vw_resize">+</div>'+
+                    '<div id="vw_resize" title="Maximize">+</div>'+
                 '</div>'+
                 '<div id="vw_canvas"></div>'+
                 '<div id="vw_content">'+
@@ -121,6 +121,7 @@
         visual.window.removeClass("vw_max");
         visual.window.height(visual.minHeight);
         visual.window.css("top",$(window).height()-visual.window.height()-4);
+        visual.window.find("#vw_resize").text("+").attr("title","Maximize");
         visual.canvas.height(visual.minHeight-visual.title.height()-4);
         visual.canvas.width(visual.minHeight-6);
         visual.content.hide();
@@ -135,6 +136,7 @@
         visual.mw_body.width(visual.mw_body.width()-visual.window.width());
         visual.window.height($(window).height()-8);
         visual.window.css("top",2);
+        visual.window.find("#vw_resize").text("-").attr("title","Minimize");
         visual.canvas.height(visual.window.width());
         visual.canvas.width(visual.window.width()-6);
         visual.canvas.css("margin-left",3);
@@ -154,6 +156,26 @@
             }else{
                 maximize(visual);
             }
+        });
+        
+        
+        visual.window.click(function(){
+            var particles, geometry, material, i, h, color, sprite, size;
+            geometry = new THREE.Geometry();
+//            sprite = THREE.ImageUtils.loadTexture("textures/sprites/disc.png");
+            sprite = THREE.ImageUtils.loadTexture(visual.server+"extensions/Visual/modules/textures/sprites/article.png");
+            for (i = 0; i < 1; i++) {
+                var vertex = new THREE.Vector3();
+                vertex.x = 2000 * Math.random() - 1000;
+                vertex.y = 2000 * Math.random() - 1000;
+                vertex.z = 2000 * Math.random() - 1000;
+                geometry.vertices.push(vertex);
+            }
+            material = new THREE.ParticleSystemMaterial({size: 35, sizeAttenuation: false, map: sprite, transparent: true});
+            material.color.setHSL(1.0, 0.3, 0.7);
+            particles = new THREE.ParticleSystem(geometry, material);
+            particles.sortParticles = true;
+            three.scene.add(particles);
         });
     };
     
@@ -264,7 +286,6 @@
 
         function init() {
             geometry = new THREE.Geometry();
-//            sprite = THREE.ImageUtils.loadTexture("textures/sprites/disc.png");
             sprite = THREE.ImageUtils.loadTexture(visual.server+"extensions/Visual/modules/textures/sprites/article.png");
             for (i = 0; i < 500; i++) {
                 var vertex = new THREE.Vector3();
@@ -292,7 +313,10 @@
         function onDocumentMouseMove(event) {
             var canvas = $(".vw_window");
             var position = canvas.position();
-            if(event.clientX>=position.left && event.clientY>=position.top){
+            if(event.clientX>=position.left && event.clientY>=position.top && event.clientY<=position.top+visual.canvas.height()){
+                
+                console.debug("dentro");
+                
                 mouseX = event.clientX - windowHalfX;
                 mouseY = event.clientY - windowHalfY;
             }
@@ -321,7 +345,6 @@
             three.camera.position.y += (-mouseY - three.camera.position.y) * 0.05;
             three.camera.lookAt(three.scene.position);
             h = (360 * (1.0 + time) % 360) / 360;
-//            material.color.setHSL(h, 0.5, 0.5);
             three.renderer.render(three.scene, three.camera);
         }
     };
@@ -375,7 +398,6 @@
                     $(this).attr("data-index",index);
                     $(this).addClass("vw_link");
                     vwContent.append($(this).clone());
-//                    $(this).css("background","#00ff00");
                     $(this).addClass("vw_highlighted");
                     index++;
                 }
@@ -551,7 +573,24 @@
     };
         
         
-        
+    
+    
+    
+    var rad = function(x) {
+    return x * Math.PI / 180;
+  };
+
+  var getDistance = function(p1, p2) {
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(p2.lat() - p1.lat());
+    var dLong = rad(p2.lng() - p1.lng());
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d; // returns the distance in meter
+  };
         
         
         
