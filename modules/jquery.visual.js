@@ -120,6 +120,7 @@
         visual.mw_body.width("auto");
         visual.window.removeClass("vw_max");
         visual.window.height(visual.minHeight);
+        visual.window.css("top",$(window).height()-visual.window.height()-4);
         visual.canvas.height(visual.minHeight-visual.title.height()-4);
         visual.canvas.width(visual.minHeight-6);
         visual.content.hide();
@@ -132,7 +133,8 @@
     function maximize(visual){
         visual.window.addClass("vw_max");
         visual.mw_body.width(visual.mw_body.width()-visual.window.width());
-        visual.window.height($(window).height());
+        visual.window.height($(window).height()-8);
+        visual.window.css("top",2);
         visual.canvas.height(visual.window.width());
         visual.canvas.width(visual.window.width()-6);
         visual.canvas.css("margin-left",3);
@@ -263,7 +265,7 @@
         function init() {
             geometry = new THREE.Geometry();
 //            sprite = THREE.ImageUtils.loadTexture("textures/sprites/disc.png");
-            sprite = THREE.ImageUtils.loadTexture(visual.server+"extensions/Visual/modules/textures/sprites/disc.png");
+            sprite = THREE.ImageUtils.loadTexture(visual.server+"extensions/Visual/modules/textures/sprites/article.png");
             for (i = 0; i < 500; i++) {
                 var vertex = new THREE.Vector3();
                 vertex.x = 2000 * Math.random() - 1000;
@@ -319,7 +321,7 @@
             three.camera.position.y += (-mouseY - three.camera.position.y) * 0.05;
             three.camera.lookAt(three.scene.position);
             h = (360 * (1.0 + time) % 360) / 360;
-            material.color.setHSL(h, 0.5, 0.5);
+//            material.color.setHSL(h, 0.5, 0.5);
             three.renderer.render(three.scene, three.camera);
         }
     };
@@ -373,7 +375,8 @@
                     $(this).attr("data-index",index);
                     $(this).addClass("vw_link");
                     vwContent.append($(this).clone());
-                    $(this).css("background","#00ff00");
+//                    $(this).css("background","#00ff00");
+                    $(this).addClass("vw_highlighted");
                     index++;
                 }
             });

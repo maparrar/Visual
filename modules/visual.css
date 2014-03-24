@@ -6,14 +6,17 @@
  * Dec 2013
  **/
 .vw_window{
-    background:#A64B00;
-    bottom:0;
+    background: #dcffd1;
+    border: solid 1px #cccccc;
+    border-radius: 5px;
+    bottom: 2px;
     font-size:.8em;
     height:100px;
     line-height:15px;
     overflow:auto;
     position:fixed;
-    right:0;
+    right: 2px;
+    top: 2px;
     width:100px;
     z-index:255;
 }
@@ -21,11 +24,14 @@
     width: 20%;
 }
 .vw_window #vw_title{
-    background:#A64B00;
-    height:15px;
+    background: #dcffd1;
+    height:20px;
 }
 .vw_window #vw_title #vw_name{
+    color: #276614;
     float:left;
+    font-weight: bold;
+    line-height: 20px;
     text-indent:3px;
 }
 .vw_window #vw_title #vw_resize{
@@ -59,4 +65,12 @@
 }
 .vw_window #vw_content .vw_item{
     margin-top: 5px;
+}
+.vw_highlighted{
+    background: #dcffd1;
+    border: solid 1px #cccccc;
+    border-radius: 3px;
+    color: #276614;
+    font-weight: bold;
+    padding: 1px;
 }
